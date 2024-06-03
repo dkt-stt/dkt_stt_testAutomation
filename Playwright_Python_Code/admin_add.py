@@ -1,12 +1,10 @@
-import re
-import random
 from playwright.sync_api import sync_playwright
 
 if True: # Exid 계정정보
-    id = "ldap id"
-    pw = "ldap pw"
-uid = "uid"
-addnum = "횟수"
+    id = "본인 ldap id"
+    pw = "본인 ldap ps"
+uid = "추가하고 싶은 계정의 uid"
+addnum = "추가하고 싶은 횟수"
 
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=False)  # headless 모드를 끄려면 False로 설정
