@@ -2,7 +2,7 @@ from playwright.sync_api import sync_playwright
 
 if True: # Exid 계정정보
     id = "본인 ldap id"
-    pw = "본인 ldap ps"
+    pw = "본인 ldap pw"
 uid = "추가하고 싶은 계정의 uid"
 addnum = "추가하고 싶은 횟수"
 
