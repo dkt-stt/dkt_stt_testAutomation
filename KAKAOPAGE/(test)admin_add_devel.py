@@ -25,7 +25,7 @@ def login(page):
         print("")
     # 로그인 절차 - Log in 클릭
         page.get_by_role("button", name="로그인").click()
-        if page.title() == "EXID 타이틀":
+        if page.get_by_text("EXID 에 오신것을 환영합니다!"):
             # 로그인 성공 시 LDAP 확인
             LDAP = id
             print("안녕하세요 " + LDAP + " !")
@@ -67,14 +67,16 @@ def main():
 
             # addnum 횟수만큼 반복 
             addnum = input("추가하려는 횟수를 입력해주세요: ")
-            for i in range (addnum):
+            for i in range (int(addnum)):
                 page1 = page1_info.value
                 page1.get_by_role("button", name="횟수부여").click()
                 page1.get_by_role("button", name="부여", exact=True).click()
             print(str(addnum) + "회 추가 완료")
 
             print("5초 후에 프로그램이 자동으로 종료됩니다.")
-
-             # 브라우저 종료
-            context.close()
             browser.close()
+            time.sleep(5)
+            sys.exit()
+if __name__ == "__main__":
+    main()
+
