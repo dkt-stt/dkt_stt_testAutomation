@@ -25,7 +25,8 @@ def login(page):
         print("")
     # 로그인 절차 - Log in 클릭
         page.get_by_role("button", name="로그인").click()
-        if page.get_by_text("EXID 에 오신것을 환영합니다!"):
+        page.wait_for_timeout(1000)
+        if page.get_by_text("Sign Out").is_visible():
             # 로그인 성공 시 LDAP 확인
             LDAP = id
             print("안녕하세요 " + LDAP + " !")
