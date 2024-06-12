@@ -4,7 +4,7 @@ if True: # Exid 계정정보
     id = "본인 ldap id"
     pw = "본인 ldap pw"
 uid = "추가하고 싶은 계정의 uid"
-addnum = "추가하고 싶은 횟수"
+addnum = "추가하고 싶은 횟수ㅌㅌㅌ"
 
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=False)  # headless 모드를 끄려면 False로 설정
