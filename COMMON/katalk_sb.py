@@ -6,7 +6,6 @@ from playwright.sync_api import sync_playwright
 print("")
 print("안녕하세요. KakaoTalk Sandbox Admin 인증번호 요청입니다.")
 print("아이디와 패스워드가 3번 틀릴 경우 프로그램은 종료됩니다.")
-print("ㄴㅇㄹㄴㅇㄹㅇㄴㄹ")
 
 # 최대 3번의 로그인 시도
 def login(page):
