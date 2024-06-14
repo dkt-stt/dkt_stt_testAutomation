@@ -67,7 +67,7 @@ def main():
 
             # addnum 횟수만큼 반복 
             addnum = input("추가하려는 횟수를 입력해주세요: ")
-            for i in range (int(addnum)):
+            for i in range (int(addnum)+1):
                 page1 = page1_info.value
                 page1.get_by_role("button", name="횟수부여").click()
                 page1.get_by_role("button", name="부여", exact=True).click()
