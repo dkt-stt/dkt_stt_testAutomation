@@ -5,7 +5,7 @@ from playwright.sync_api import sync_playwright
 
 
 print("")
-print("안녕하세요. Kakaopage 기기 등록 제한 추가 요청입니다.")
+print("Kakaopage exid 기기 등록 제한 추가 요청입니다.")
 print("LDAP 아이디와 패스워드가 3번 틀릴 경우 프로그램은 종료됩니다.")
 
 # 최대 3번의 로그인 시도
@@ -14,11 +14,11 @@ def login(page):
         page.goto("https://sandbox-charlie.kakaopage.com/exid/login/?referer=/exid/")
 
     # 로그인 절차 - 아이디 입력
-        id = input("아이디를 입력해주세요: ")
+        id = input("* 아이디를 입력해주세요: ")
         page.get_by_placeholder("LDAP ID 를 입력하세요").fill(id)
 
     # 로그인 절차 - 비밀번호 입력
-        password = getpass.getpass("패스워드를 입력해주세요: ")
+        password = getpass.getpass("* 패스워드를 입력해주세요: ")
         page.get_by_placeholder("패스워드를 입력하세요").fill(password)
 
         print("")
@@ -36,7 +36,7 @@ def login(page):
             print("")
             if i == 2:
                 print("최대 시도 횟수를 초과하였습니다.")
-                print("5초 후에 프로그램이 자동으로 종료됩니다.")
+                print("5초 후에 프로그램이 종료됩니다.")
                 time.sleep(5)
                 return False
     return False
@@ -46,7 +46,6 @@ def main():
         browser = p.chromium.launch(headless=True)
         context = browser.new_context()
         page = context.new_page()
-
         # 로그인 시도
         if not login(page):
             sys.exit()
@@ -55,7 +54,7 @@ def main():
             # 고객 센터 > 고객 조회 이동
             page.get_by_text("고객 센터").click()
             page.get_by_text("고객 조회", exact=True).click()
-            uid = input("추가하려는 계정의 UID를 입력해주세요: ")
+            uid = input("* 추가하려는 계정의 UID를 입력해주세요: ")
             page.get_by_label("카카오페이지 UID:").fill(uid)
 
             # 1초 대기
@@ -66,14 +65,15 @@ def main():
                 page.get_by_role("button", name="등록 기기 관리").click()
 
             # addnum 횟수만큼 반복 
-            addnum = input("추가하려는 횟수를 입력해주세요: ")
+            addnum = input("* 추가하려는 횟수를 입력해주세요: ")
             for i in range (int(addnum)):
                 page1 = page1_info.value
                 page1.get_by_role("button", name="횟수부여").click()
                 page1.get_by_role("button", name="부여", exact=True).click()
+                page1.wait_for_timeout(100)
             print(str(addnum) + "회 추가 완료")
 
-            print("5초 후에 프로그램이 자동으로 종료됩니다.")
+            print("5초 후에 프로그램이 종료됩니다.")
             browser.close()
             time.sleep(5)
             sys.exit()
