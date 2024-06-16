@@ -2,6 +2,4 @@
 모두 환영합니다.
 <br>스토리테스트기술팀의 첫 저장소 생성을 축하합니다. 
 <br>ᕙ(•̀‸•́‶)ᕗ
-ㅁㄴㅇㅁㄴㅇ
-풀하우스
-ㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ
+![dinosaur](https://github.com/dkt-stt/dkt_stt_testAutomation/assets/131955574/db9dd987-5bca-4d6c-8ccc-4b072d2f9b7e)
