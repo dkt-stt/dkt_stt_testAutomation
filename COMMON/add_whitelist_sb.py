@@ -2,6 +2,7 @@ import re
 from playwright.sync_api import Playwright, sync_playwright, expect
 import getpass
 import time
+import sys
 
 print("")
 print("샌드박스 카카오계정 화이트리스트 등록입니다.")
