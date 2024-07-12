@@ -11,20 +11,21 @@ print("LDAP 아이디와 패스워드가 3번 틀릴 경우 프로그램은 종�
 # 최대 3번의 로그인 시도
 def login(page):
     for i in range(3):
-        page.goto("https://sandbox-admin-account.kakao.com/")
+        page.goto("https://sandbox-admin-account.kakao.com/login?return_url=https%3A%2F%2Fsandbox-admin-account.kakao.com%2F")
 
     # 로그인 절차 - 아이디 입력
         id = input("아이디를 입력해주세요: ")
-        page.get_by_placeholder("아이디").fill(id)
+        page.get_by_placeholder("로그인 아이디").fill(id)
 
     # 로그인 절차 - 비밀번호 입력
         password = getpass.getpass("패스워드를 입력해주세요: ")
-        page.get_by_placeholder("비밀번호").fill(password)
+        page.get_by_placeholder("패스워드").fill(password)
 
         print("")
     # 로그인 절차 - Log in 클릭
-        page.get_by_role("button", name="Log in").click()
-        if page.title() == "Kakaotalk Admin":
+        page.get_by_role("button", name="로그인").click()
+        page.wait_for_timeout(1000)
+        if page.get_by_text("Welcome").is_visible():
             # 로그인 성공 시 LDAP 확인
             LDAP = id
             print("안녕하세요 " + LDAP + " !")
@@ -42,7 +43,7 @@ def login(page):
 def main():
     with sync_playwright() as p:
         # 브라우저 생성
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=False)
         context = browser.new_context()
         page = context.new_page()
 
