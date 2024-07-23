@@ -42,7 +42,7 @@ def login(page):
 def main():
     with sync_playwright() as p:
         # 브라우저 생성
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch(headless=True)
         context = browser.new_context()
         page = context.new_page()
 
