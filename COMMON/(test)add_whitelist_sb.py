@@ -1,4 +1,3 @@
-import re
 from playwright.sync_api import Playwright, sync_playwright, expect
 import getpass
 import time
@@ -43,7 +42,7 @@ def login(page):
 def main():
     with sync_playwright() as p:
         # 브라우저 생성
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=False)
         context = browser.new_context()
         page = context.new_page()
 
