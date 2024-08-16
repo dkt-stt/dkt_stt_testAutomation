@@ -11,7 +11,7 @@ with sync_playwright() as p:
     
     page.goto("https://www.google.com/")
     for i in range(10):
-        text_list = ['사과', '딸기', '포도', '자몽', '망고', '바나나']
+        text_list = ['사과', '딸기', '포도', '자몽', '망고', '바나나', '자두']
         random_text = random.choice(text_list)
         page.get_by_label("검색", exact=True).fill(random_text)
         page.wait_for_timeout(500)
