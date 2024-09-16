@@ -1,6 +1,7 @@
+import os
+import sys
 import tkinter as tk
 from other_code import execute_code  # other_code.py에서 함수 가져오기
-
 
 # 입력정보 받음
 def on_button_click():
@@ -19,10 +20,17 @@ window.geometry("400x700")
 window.title("스토리테스트기술팀 자동화 툴")
 
 # 창 크기 고정 (크기 조절 불가)
-# window.resizable(False, False)
+window.resizable(False, False)
+
+if hasattr(sys, '_MEIPASS'):
+    base_path = sys._MEIPASS
+else:
+    base_path = os.path.abspath(".")
+
+img_path = os.path.join(base_path, 'cover.png')
 
 # PhotoImage를 사용하여 이미지 로드 (PNG 또는 GIF)
-img = tk.PhotoImage(file="/Users/andy.sc/Desktop/dkt_stt_testAutomation/KAKAOPAGE/code/Selenium/cover.png")  # 이미지 파일 경로
+img = tk.PhotoImage(file=img_path)  # 이미지 파일 경로
 
 # Label 위젯에 이미지 삽입
 label = tk.Label(window, image=img)
