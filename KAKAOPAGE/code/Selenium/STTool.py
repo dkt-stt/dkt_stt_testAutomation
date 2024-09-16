@@ -7,7 +7,7 @@ def on_button_click():
     user_id = id_entry.get()  # 입력된 ID 값 가져오기
     user_pw = pw_entry.get()  # 입력된 PW 값 가져오기
     uid = uid_entry.get()  # 입력된 uid 값 가져오기
-    num = uid_entry.get()  # 입력된 추가횟수 값 가져오기
+    num = num_entry.get()  # 입력된 추가횟수 값 가져오기
     print(f"ID: {user_id}, PW: {user_pw}, UID: {uid}, 추가 횟수: {num}")
 
     # 여기서 execute_code 함수에 필요한 값을 넘겨줄 수 있습니다.
