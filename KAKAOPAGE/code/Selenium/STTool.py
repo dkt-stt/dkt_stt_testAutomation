@@ -22,7 +22,7 @@ window.title("스토리테스트기술팀 자동화 툴")
 # window.resizable(False, False)
 
 # PhotoImage를 사용하여 이미지 로드 (PNG 또는 GIF)
-img = tk.PhotoImage(file="cover.png")  # 이미지 파일 경로
+img = tk.PhotoImage(file="/Users/andy.sc/Desktop/dkt_stt_testAutomation/KAKAOPAGE/code/Selenium/cover.png")  # 이미지 파일 경로
 
 # Label 위젯에 이미지 삽입
 label = tk.Label(window, image=img)
