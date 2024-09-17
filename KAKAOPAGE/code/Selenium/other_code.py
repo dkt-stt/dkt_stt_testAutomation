@@ -8,7 +8,7 @@ def execute_code(user_id, user_pw, uid, add):
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--headless")  # Headless 모드 추가
 
-    # Selenium 웹 드라이버 설정 (Headless 모드 활성화)
+    # Selenium 웹 드라이버 설정
     driver = webdriver.Chrome(options=chrome_options)
 
     # 암묵적 대기 설정 (페이지 로딩 기다림)
