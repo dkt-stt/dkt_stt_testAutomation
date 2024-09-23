@@ -1,46 +1,73 @@
-# other_code.py
+# other_code
+import os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
 def execute_code(user_id, user_pw, uid, add):
+    # 현재 실행 파일의 경로에서 chromedriver 경로 설정
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    chromedriver_path = os.path.join(current_dir, 'chromedriver')
+    
+    # 크롬 옵션 설정
     chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument("--headless")  # Headless 모드 추가
+    chrome_options.add_argument("--headless")  # 필요시 주석 처리
+    chrome_options.add_argument("--window-size=1920,1080")  # 브라우저 창 크기 설정
 
     # Selenium 웹 드라이버 설정
     driver = webdriver.Chrome(options=chrome_options)
 
-    # 암묵적 대기 설정 (페이지 로딩 기다림)
-    driver.implicitly_wait(10)
+    try:
+        # exid 페이지로 이동
+        driver.get("https://sandbox-charlie.kakaopage.com/exid/login/?referer=/exid/")
 
-    # exid 이동
-    driver.get("https://sandbox-charlie.kakaopage.com/exid/login/?referer=/exid/")
+        # 계정 정보 입력 후 로그인 (명시적 대기 사용)
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '#user_id'))).send_keys(user_id)
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '#user_pw'))).send_keys(user_pw)
+        WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#loginForm > div:nth-child(5) > div > button'))).click()
 
-    # 계정정보 입력 후 로그인
-    driver.find_element(By.CSS_SELECTOR, '#user_id').send_keys(user_id)
-    driver.find_element(By.CSS_SELECTOR, '#user_pw').send_keys(user_pw)
-    driver.find_element(By.CSS_SELECTOR, '#loginForm > div:nth-child(5) > div > button').click()
+        # 고객 센터 페이지로 이동 후 uid 입력
+        driver.get("https://sandbox-charlie.kakaopage.com/exid/customer/user/lookup/v2/")
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '#id_kakaopage_uid'))).send_keys(uid)
 
-    # 고객 센터 이동 후 uid 입력
-    driver.get("https://sandbox-charlie.kakaopage.com/exid/customer/user/lookup/v2/")
-    driver.find_element(By.CSS_SELECTOR, '#id_kakaopage_uid').send_keys(uid)
+        # 새 창 띄우기
+        main_window = driver.current_window_handle  # 메인 윈도우 핸들 저장
+        WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#wrapper > div > div:nth-child(8) > button'))).click()
 
-    # 새 창 띄우기
-    main_window = driver.current_window_handle  # 메인 윈도우 핸들 저장
-    driver.find_element(By.CSS_SELECTOR, '#wrapper > div > div:nth-child(8) > button').click()
+        # 새로 열린 창으로 전환
+        WebDriverWait(driver, 10).until(EC.number_of_windows_to_be(2))  # 새 창이 열릴 때까지 대기
+        new_window = [window for window in driver.window_handles if window != main_window][0]
+        driver.switch_to.window(new_window)
 
-    # 새로 열린 창으로 전환
-    WebDriverWait(driver, 10).until(EC.number_of_windows_to_be(2))  # 새로운 창이 열릴 때까지 대기
-    new_window = [window for window in driver.window_handles if window != main_window][0]
-    driver.switch_to.window(new_window)
+        # add 횟수만큼 반복
+        for i in range(add):
+            try:
+                # 버튼이 표시되고 클릭할 수 있는 상태인지 확인 후 클릭
+                button = WebDriverWait(driver, 10).until(
+                    EC.element_to_be_clickable((By.CSS_SELECTOR, '#wrapper > div > div:nth-child(4) > div.col-md-8.right > button'))
+                )
 
-    # add 횟수만큼 반복
-    for i in range(add):
-        driver.find_element(By.CSS_SELECTOR, '#wrapper > div > div:nth-child(4) > div.col-md-8.right > button').click()
-        driver.find_element(By.CSS_SELECTOR, '#add-bonus-btn').click()
+                if button.is_displayed():  # 버튼이 표시되었는지 확인
+                    button.click()
+                else:
+                    print("버튼이 화면에 표시되지 않음")
 
-    print(str(add) + "회 추가 완료")
+                # 보너스 추가 버튼 클릭
+                add_bonus_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#add-bonus-btn')))
+                add_bonus_button.click()
 
-    # 브라우저 종료
-    driver.quit()
+            except NoSuchElementException as e:
+                print(f"클릭 에러 발생: {e}")
+                break
+
+        print(str(add) + "회 추가 완료")
+
+    except TimeoutException as e:
+        print(f"타임아웃 발생: {e}")
+    except NoSuchElementException as e:
+        print(f"엘리먼트를 찾을 수 없습니다: {e}")
+    finally:
+        # 브라우저 종료
+        driver.quit()
