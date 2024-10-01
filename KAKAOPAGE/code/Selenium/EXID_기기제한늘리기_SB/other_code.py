@@ -6,11 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
-def execute_code(user_id, user_pw, uid, add):
-    # 현재 실행 파일의 경로에서 chromedriver 경로 설정
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    chromedriver_path = os.path.join(current_dir, 'chromedriver')
-    
+def execute_code(user_id, user_pw, uid, add):    
     # 크롬 옵션 설정
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--headless")  # 필요시 주석 처리
